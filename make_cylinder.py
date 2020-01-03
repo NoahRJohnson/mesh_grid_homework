@@ -10,9 +10,6 @@ def make_cylinder(length, radius, linear_resolution, angular_resolution):
   """
   Make a mesh of a cylinder with the given dimensions.
 
-  The heights of the grid will follow a sine wave along the
-  x axis.
-
   Parameters
   ----------
   length : float
@@ -30,12 +27,9 @@ def make_cylinder(length, radius, linear_resolution, angular_resolution):
     A (vertices, faces) pair representing the mesh.
   """
 
-  # Create a grid of cells, each cell is grid_spacing by grid_spacing
+  # Create a grid of cells
   columns = np.arange(0, length, linear_resolution)
   rows = np.arange(0, 2 * np.pi, angular_resolution)
-
-  # Add smaller cells to the margin
-  np.append(columns, length)
 
   ####################
   # Helper functions #
@@ -73,9 +67,7 @@ def make_cylinder(length, radius, linear_resolution, angular_resolution):
     upper_left_vertex_index = back_a_column(upper_right_vertex_index)
 
     # Create the two triangular faces of the grid cell
-    # triangle1 = [lower_left_vertex_index, lower_right_vertex_index, upper_left_vertex_index]
     triangle1 = [upper_left_vertex_index, lower_right_vertex_index, lower_left_vertex_index]
-    # triangle2 = [upper_right_vertex_index, upper_left_vertex_index, lower_right_vertex_index]
     triangle2 = [lower_right_vertex_index, upper_left_vertex_index, upper_right_vertex_index]
 
     return (triangle1, triangle2)
@@ -141,11 +133,11 @@ if __name__ == "__main__":
 
   # Parse command-line args
   parser = argparse.ArgumentParser(description="Create a triangular mesh grid "
-                                               "of x width and y height.")
-  parser.add_argument('length', type=float, help='Width of grid')
-  parser.add_argument('radius', type=float, help='Height of grid')
-  parser.add_argument('linear_resolution', type=float, help='Height of grid')
-  parser.add_argument('angular_resolution', type=float, help='Height of grid')
+                                               "of a cylinder.")
+  parser.add_argument('length', type=float, help='Length of cylinder along its axis')
+  parser.add_argument('radius', type=float, help='Radius of cylinder')
+  parser.add_argument('linear_resolution', type=float, help='Resolution along axis')
+  parser.add_argument('angular_resolution', type=float, help='Angular resolution')
   parser.add_argument('obj_file', type=str, nargs='?', default='grid.obj',
                       help='Output file (defaults to grid.obj)')
   args = parser.parse_args()
