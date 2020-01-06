@@ -138,14 +138,15 @@ def make_uv_sphere(radius, longitude_resolution, latitude_resolution):
 
 if __name__ == "__main__":
 
-  # Test run example: "./make_grid.py 123 123"
-
   # Parse command-line args
   parser = argparse.ArgumentParser(description="Create a triangular mesh grid "
                                                "of a UV sphere.")
-  parser.add_argument('radius', type=float, help='Radius of sphere')
-  parser.add_argument('longitude_resolution', type=float, help='The angular resolution along the X axis in radians.')
-  parser.add_argument('latitude_resolution', type=float, help='The angular resolution along the Y axis in radians.')
+  parser.add_argument('radius', type=float, nargs='?', default=1.0,
+                      help='Radius of sphere')
+  parser.add_argument('longitude_resolution', type=float, nargs='?', default=0.1,
+                      help='The angular resolution along the X axis in radians.')
+  parser.add_argument('latitude_resolution', type=float, nargs='?', default=0.1,
+                      help='The angular resolution along the Y axis in radians.')
   parser.add_argument('obj_file', type=str, nargs='?', default='grid.obj',
                       help='Output file (defaults to grid.obj)')
   args = parser.parse_args()

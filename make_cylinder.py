@@ -28,8 +28,12 @@ def make_cylinder(length, radius, linear_resolution, angular_resolution):
   """
 
   # Create a grid of cells
-  columns = np.arange(0, length, linear_resolution)
+  columns = np.arange(0, length - 1, linear_resolution)
   rows = np.arange(0, 2 * np.pi, angular_resolution)
+
+  # Add smaller column to the margin
+  columns = np.append(columns, length - 1)
+  # Don't do the same for rows, since we're going to have it wrap around
 
   ####################
   # Helper functions #
